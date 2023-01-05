@@ -64,9 +64,11 @@ class CMakeBuild(build_py):
         if not cmake_build_dir:
             cmake_build_dir = os.path.abspath(
                 os.path.join(target_dir, "..", "cmake_build"))
-        python_package_dir = os.path.join(cmake_build_dir,
-                                          "tools", "torch-mlir", "python_packages",
-                                          "torch_mlir")
+        python_package_dir = os.getenv("TORCH_MLIR_PYTHON_PACKAGE_DIST_FILES_DIR")
+        if not python_package_dir:
+            python_package_dir = os.path.join(cmake_build_dir,
+                                            "tools", "torch-mlir", "python_packages",
+                                            "torch_mlir")
         if not os.getenv("TORCH_MLIR_CMAKE_BUILD_DIR_ALREADY_BUILT"):
             src_dir = os.path.abspath(os.path.dirname(__file__))
             llvm_dir = os.path.join(
